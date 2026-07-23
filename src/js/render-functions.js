@@ -18,7 +18,8 @@ export function createGallery(images){
 }
 
 export function clearGallery() {
-    lightbox.refresh();
+    //lightbox.refresh();
+    container.innerHTML = '';
 }
 
 const loader = document.querySelector('.loader');

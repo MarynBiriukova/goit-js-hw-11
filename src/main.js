@@ -5,27 +5,29 @@ import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
 
 const form = document.querySelector('.form');
-const list = document.querySelector('.gallery')
+//const list = document.querySelector('.gallery')
 
-hideLoader();
+//hideLoader();
 form.addEventListener("submit", onFormSubmit);
 
 function onFormSubmit(evt) {
     evt.preventDefault();
     
   const  query = form.elements['search-text'].value.trim();
-
-  if (query === '') {
-    console.log('Будь ласка, введіть слово для пошуку!');
+  console.log(`|${query}|`);
+  if (query === "") {
+    console.log("Будь ласка, введіть слово для пошуку!");
     return;
   }
-    showLoader(); 
+  showLoader();
+  clearGallery();
   getImagesByQuery(query)
       .then(response => {
       
-        list.innerHTML = ``;   
-       console.log(response.data.hits);
-          if (response.data.hits.length === 0)
+        //list.innerHTML = ``; 
+        clearGallery();
+       console.log(response.hits);//response.data.hits
+          if (response.hits.length === 0)
               iziToast.error({
                   message: 'Sorry, there are no images matching your search query. Please try again!',
                   position: 'topRight',
@@ -33,12 +35,18 @@ function onFormSubmit(evt) {
               });
           else {
              
-              createGallery(response.data.hits);
+              createGallery(response.hits);
               //clearGallery();
           }
   })
   .catch(error => {
     console.log(error);
+    iziToast.error({
+           title: 'Error',
+           message: 'Something went wrong. Check your internet connection or try again later!',
+           position: 'topRight',
+           timeout: 3000
+       });
   })
       
       .finally(() => {
