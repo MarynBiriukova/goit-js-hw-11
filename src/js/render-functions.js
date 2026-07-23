@@ -12,24 +12,25 @@ const lightbox = new SimpleLightbox('.gallery a', {
 
 
 export function createGallery(images){
-    
+    if (!container) return;
     container.insertAdjacentHTML("beforeend", createMarkup(images));
     lightbox.refresh();
 }
 
 export function clearGallery() {
-    //lightbox.refresh();
-    container.innerHTML = '';
+    if (container)
+        container.innerHTML = '';
+    lightbox.refresh();
 }
 
 const loader = document.querySelector('.loader');
 
 export function showLoader() {
-    loader.classList.remove('is-hidden');
+   if(loader) loader.classList.remove('is-hidden');
 }
 
 export function hideLoader() {
-    loader.classList.add('is-hidden');
+    if(loader) loader.classList.add('is-hidden');
 }
 
 function createMarkup(arr) {

@@ -5,9 +5,7 @@ import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
 
 const form = document.querySelector('.form');
-//const list = document.querySelector('.gallery')
 
-//hideLoader();
 form.addEventListener("submit", onFormSubmit);
 
 function onFormSubmit(evt) {
@@ -24,9 +22,7 @@ function onFormSubmit(evt) {
   getImagesByQuery(query)
       .then(response => {
       
-        //list.innerHTML = ``; 
-        clearGallery();
-       console.log(response.hits);//response.data.hits
+       console.log(response.hits);
           if (response.hits.length === 0)
               iziToast.error({
                   message: 'Sorry, there are no images matching your search query. Please try again!',
@@ -36,7 +32,6 @@ function onFormSubmit(evt) {
           else {
              
               createGallery(response.hits);
-              //clearGallery();
           }
   })
   .catch(error => {
